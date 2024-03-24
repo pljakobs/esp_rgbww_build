@@ -1,0 +1,29 @@
+#!/bin/bash
+cd /build/esp_rgb_webapp2
+dir=$(pwd)
+git pull
+git checkout devel
+if [[ -f ./index.html.gz ]]
+then
+	gunzip *.gz
+fi
+
+rm dist/spa/* -rf
+
+npm install
+npx quasar build
+
+cd $dir
+#shrink things
+./minifyFontnames.sh
+./gzipSPA.sh
+
+version=$(git describe --abbrev=4 --dirty --always --tags)
+echo $version >dist/spa/VERSION
+echo "VUE_APP_BUILD_NUMBER=$version" >.env
+
+echo "deploying " 
+cat dist/spa/VERSION
+rm -rf /build/esp_rgbww_firmware/spiffs/*
+cp -av dist/spa/* /build/esp_rgbww_firmware/spiffs
+
