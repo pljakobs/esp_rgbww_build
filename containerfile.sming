@@ -1,19 +1,26 @@
 # Use an Ubuntu base image
 FROM localhost/build_base
-#COPY prepare_sming.sh /usr/bin
-#RUN  chmod +x /usr/bin/prepare_sming.sh &&\
-#     /usr/bin/prepare_sming.sh
 RUN BUILDROOT=/build && \
-    cd /opt && \
+    cd $BUILDROOT && \
+    if [ ! -d esp_rgbww_firmware ] ;\
+    then \
+	git clone https://github.com/pljakobs/esp_rgbww_firmware.git ;\
+    fi &&\
+    cd esp_rgbww_firmware && \
     #cloning and installing current Sming version
-    git clone https://github.com/SmingHub/Sming.git && \
-    cd /opt/Sming && \
-    git checkout develop  && \
+    # git clone https://github.com/SmingHub/Sming.git && \
+    # cd /opt/Sming && \
+    git checkout devel  && \
     git submodule init && \
     git submodule update && \
 
+    cd $BUILDROOT/esp_rgbww_firmware/Sming && \
+    git status && \
+    #git pull origin/develop && \
+    git checkout develop &&\
+    ls Tools && \
     # Esp8266
-    export SMING_HOME=/opt/Sming/Sming && \
+    export SMING_HOME=$BUILDROOT/esp_rgbww_firmware/Sming/Sming && \
     export ESP_HOME=/opt/esp-quick-toolchain && \
 
     # Esp32
@@ -23,7 +30,7 @@ RUN BUILDROOT=/build && \
     # Rp2040
     export PICO_TOOLCHAIN_PATH=${PICO_TOOLCHAIN_PATH:=/opt/rp2040} && \
 
-    /opt/Sming/Tools/install.sh all && \
+    $BUILDROOT/esp_rgbww_firmware/Sming/Tools/install.sh all && \
 
     echo "SMING_HOME=$SMING_HOME"  && \
     echo "ESP_HOME=$ESP_HOME" && \
