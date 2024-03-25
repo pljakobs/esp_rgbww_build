@@ -16,6 +16,7 @@ then
 	cd $BUILDDIR
 	git clone git@github.com:pljakobs/esp_rgb_webapp2.git
 fi
+cd $installRoot
 podman build -f containerfile.base -t build_base
 podman build -f containerfile.quasar -t build_quasar
 podman build -f containerfile.sming -t build_sming -v $BUILDDIR/:/build:z 
