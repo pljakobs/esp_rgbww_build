@@ -1,4 +1,6 @@
 #!/bin/bash
+cpus=$(nproc)
+threads=$(( cpus * 2 ))
 export ESP_HOME=/opt/esp-quick-toolchain
 export SMING_HOME=/opt/Sming/Sming
 export IDF_PATH=${IDF_PATH:=/opt/esp-idf} 
@@ -9,4 +11,4 @@ git checkout devel
 git submodule init
 git submodule sync
 git submodule update
-make -j4 SMING_SOC=esp8266
+make -j $threads SMING_SOC=esp8266
