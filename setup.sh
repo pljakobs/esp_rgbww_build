@@ -3,7 +3,7 @@ if [ "$1"=="" ]
 then
 	BUILDDIR=$pwd/esp_build
 else
-	BUILDDIR=$pwd/$1
+	BUILDDIR=$1
 fi
 
 if [ ! -d $BUILDDIR ]
