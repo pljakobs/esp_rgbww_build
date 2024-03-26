@@ -5,9 +5,18 @@ RUN BUILDROOT=/build && \
     git clone https://github.com/sminghub/Sming.git &&\
     cd Sming && \
     git checkout develop  && \
+    git submodule set-url Sming/Components/rboot/rboot http://github.com/pljakobs/rboot && \ 
+    git submodule status Sming/Components/rboot/rboot && \
+    sed -e "s/https\:\/\/github.com\/mikee47\/rboot/http\:\/\/github.com\/pljakobs\/rboot/" <.gitmodules >.gitmodules.new &&\
+    echo "================================================" && \
+    cat .gitmodules.new &&\
+    cp .gitmodules.new .gitmodules &&\
     git submodule init && \
     git submodule sync && \
     git submodule update && \
+    cd Sming/Components/rboot/rboot && \
+    git checkout fix/includeEspSystem && \
+    cd /opt/Sming && \
 
     # Esp8266
     export SMING_HOME=/opt/Sming/Sming && \
