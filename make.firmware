@@ -7,4 +7,9 @@ export IDF_PATH=${IDF_PATH:=/opt/esp-idf}
 export IDF_TOOLS_PATH=${IDF_TOOLS_PATH:=/opt/esp32}
 echo "SMING_HOME: $SMING_HOME"
 cd /build/esp_rgbww_firmware
+if [ ! -f out/Esp8266/debug/firmware/partitions.bin ]
+then
+	# create partition table first
+	make partmap-build
+fi
 make -j $threads SMING_SOC=esp8266

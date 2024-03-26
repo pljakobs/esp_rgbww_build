@@ -17,7 +17,7 @@ export PICO_TOOLCHAIN_PATH=${PICO_TOOLCHAIN_PATH:=/opt/rp2040}
 
 /opt/Sming/Tools/install.sh all
 
-export SMING_HOME=/Sming
+export SMING_HOME=/opt/Sming
 export ESP_HOME=/opt/esp-quick-toolchain
 export IDF_PATH=/opt/esp-idf
 export ESP32_PYTHON_PATH=/usr/bin
