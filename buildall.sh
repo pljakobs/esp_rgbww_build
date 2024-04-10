@@ -17,3 +17,6 @@ git submodule update
 
 podman run --replace --name build_quasar -it -v /home/pjakobs/esp_rgbww_build/esp_build/:/build:z build_quasar /usr/bin/deploy
 podman run --replace --name build_sming -it -v /home/pjakobs/esp_rgbww_build/esp_build/:/build:z build_sming /usr/bin/make.firmware
+
+cd /home/pjakobs/esp_rgbww_build/esp_build/esp_rgbww_firmware
+./deployOTA

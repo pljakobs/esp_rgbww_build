@@ -13,3 +13,4 @@ then
 	make partmap-build
 fi
 make -j $threads SMING_SOC=esp8266
+make -j $threads SMING_ARCH=Host
