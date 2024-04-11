@@ -5,18 +5,18 @@ RUN BUILDROOT=/build && \
     git clone https://github.com/sminghub/Sming.git &&\
     cd Sming && \
     git checkout develop  && \
-    git submodule set-url Sming/Components/rboot/rboot http://github.com/pljakobs/rboot && \ 
-    git submodule status Sming/Components/rboot/rboot && \
-    sed -e "s/https\:\/\/github.com\/mikee47\/rboot/http\:\/\/github.com\/pljakobs\/rboot/" <.gitmodules >.gitmodules.new &&\
-    echo "================================================" && \
-    cat .gitmodules.new &&\
-    cp .gitmodules.new .gitmodules &&\
+    #git submodule set-url Sming/Components/rboot/rboot http://github.com/pljakobs/rboot && \ 
+    #git submodule status Sming/Components/rboot/rboot && \
+    #sed -e "s/https\:\/\/github.com\/mikee47\/rboot/http\:\/\/github.com\/pljakobs\/rboot/" <.gitmodules >.gitmodules.new &&\
+    #echo "================================================" && \
+    #cat .gitmodules.new &&\
+    #cp .gitmodules.new .gitmodules &&\
     git submodule init && \
     git submodule sync && \
     git submodule update && \
-    cd Sming/Components/rboot/rboot && \
-    git checkout fix/includeEspSystem && \
-    cd /opt/Sming && \
+    #cd Sming/Components/rboot/rboot && \
+    #git checkout fix/includeEspSystem && \
+    #cd /opt/Sming && \
 
     # Esp8266
     export SMING_HOME=/opt/Sming/Sming && \
@@ -27,11 +27,13 @@ RUN BUILDROOT=/build && \
     export IDF_TOOLS_PATH=${IDF_TOOLS_PATH:=/opt/esp32} && \
 
     # Rp2040
-    export PICO_TOOLCHAIN_PATH=${PICO_TOOLCHAIN_PATH:=/opt/rp2040} && \
+    export PICO_TOOLCHAIN_PATH=${PICO_TOOLCHAIN_PATH:=/opt/rp2040}
 
-    $SMING_HOME/../Tools/install.sh all && \
+RUN /opt/Sming/Tools/install.sh Esp8266
+RUN /opt/Sming/Tools/install.sh Esp32
+RUN /opt/Sming/Tools/install.sh Host
 
-    echo "SMING_HOME=$SMING_HOME"  && \
+RUn echo "SMING_HOME=$SMING_HOME"  && \
     echo "ESP_HOME=$ESP_HOME" && \
     echo "IDF_PATH=$IDF_PATH" && \
     echo "ESP32_PYTHON_PATH=$ESP32_PYTHON_PATH"
