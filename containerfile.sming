@@ -1,5 +1,5 @@
 # Use an Ubuntu base image
-FROM localhost/build_base
+FROM localhost/build_base as build
 RUN BUILDROOT=/build && \
     cd /opt && \
     git clone https://github.com/sminghub/Sming.git &&\
@@ -37,4 +37,8 @@ RUn echo "SMING_HOME=$SMING_HOME"  && \
     echo "ESP_HOME=$ESP_HOME" && \
     echo "IDF_PATH=$IDF_PATH" && \
     echo "ESP32_PYTHON_PATH=$ESP32_PYTHON_PATH"
+
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.7
+
+COPY --from=build /opt/ ./
 COPY make.firmware /usr/bin
