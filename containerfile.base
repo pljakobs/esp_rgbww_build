@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     libssl-dev \
     apt-utils \
+    python3-venv \
     libusb-1.0-0 &&\
     apt autoremove
 RUN mkdir /build && \

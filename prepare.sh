@@ -1,4 +1,7 @@
 BUILDROOT=/build
+FW_VERSION=feature/pinConfig
+FE_VERSION=feature/manualPinConfig
+
 cd $BUILDROOT
 #cloning and installing current Sming version
 git clone https://github.com/SmingHub/Sming.git
@@ -24,7 +27,7 @@ git clone https://github.com/pljakobs/esp_rgb_webapp2.git
 
 cd $BUILDROOT/esp_rgbww_firmware
 git pull origin
-git checkout devel
+git checkout $FW_VERSION
 rm -rf Sming
 ln -s $BUILDROOT/Sming Sming
 export SMING_HOME=/Sming
@@ -34,7 +37,7 @@ export ESP32_PYTHON_PATH=/usr/bin
 
 cd $BUILDROOT/esp_rgb_webapp2
 git pull origin 
-git checkout devel
+git checkout $FE_VERSION
 
 # Install app dependencies
 npm install
